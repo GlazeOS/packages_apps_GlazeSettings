@@ -15,6 +15,9 @@
     <!-- Title -->
     <string name="settings_title">Glaze Settings</string>
 
+    <!-- Categories -->
+    <string name="button_title">Buttons</string>
+
     <!-- Hardware keys -->
     <string name="hardware_keys_home_key_title">Home button</string>
     <string name="hardware_keys_menu_key_title">Menu button</string>

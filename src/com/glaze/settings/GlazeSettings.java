@@ -17,14 +17,17 @@
 package com.glaze.settings;
 
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceScreen;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
+
+import com.android.settings.R;
 
 import com.android.internal.logging.MetricsLogger;
+import com.android.internal.logging.MetricsProto.MetricsEvent;
 
 import com.android.settings.SettingsPreferenceFragment;
 
-public class Settings extends SettingsPreferenceFragment {
+public class GlazeSettings extends SettingsPreferenceFragment {
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -35,6 +38,6 @@ public class Settings extends SettingsPreferenceFragment {
 
     @Override
     protected int getMetricsCategory() {
-        return MetricsLogger.GLAZE_SETTINGS;
+        return MetricsEvent.GLAZE_SETTINGS;
     }
 }
