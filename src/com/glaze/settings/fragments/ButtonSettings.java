@@ -43,6 +43,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String KEY_HOME_DOUBLE_TAP = "hardware_keys_home_double_tap";
     private static final String KEY_MENU_PRESS = "hardware_keys_menu_press";
     private static final String KEY_MENU_LONG_PRESS = "hardware_keys_menu_long_press";
+    private static final String KEY_CAMERA_PRESS = "hardware_keys_camera_press";
+    private static final String KEY_CAMERA_LONG_PRESS = "hardware_keys_camera_long_press";
 
     private static final String CATEGORY_POWER = "power_key";
     private static final String CATEGORY_HOME = "home_key";
@@ -76,6 +78,8 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
     private ListPreference mHomeDoubleTapAction;
     private ListPreference mMenuPressAction;
+    private ListPreference mCameraPressAction;
+    private ListPreference mCameraLongPressAction;
 
     private Handler mHandler;
 
@@ -96,12 +100,15 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final boolean hasHomeKey = (deviceKeys & KEY_MASK_HOME) != 0;
         final boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
         final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
+        final boolean hasCameraKey = (deviceKeys & KEY_MASK_CAMERA) != 0;
 
         boolean hasAnyBindableKey = false;
         final PreferenceCategory homeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
         final PreferenceCategory menuCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
+        final PreferenceCategory cameraCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_CAMERA);
 
         mHandler = new Handler();
 
@@ -132,6 +139,19 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         } else {
             prefScreen.removePreference(menuCategory);
         }
+        if (hasCameraKey) {
+            int pressAction = Settings.System.getInt(resolver,
+                    Settings.System.KEY_CAMERA_ACTION, ACTION_NOTHING);
+            mCameraPressAction = initActionList(KEY_CAMERA_PRESS, pressAction);
+
+            int longPressAction = Settings.System.getInt(resolver,
+                    Settings.System.KEY_CAMERA_LONG_PRESS_ACTION, ACTION_LAUNCH_CAMERA);
+            mCameraLongPressAction = initActionList(KEY_CAMERA_LONG_PRESS, longPressAction);
+
+            hasAnyBindableKey = true;
+        } else {
+            prefScreen.removePreference(cameraCategory);
+        }
     }
 
     private ListPreference initActionList(String key, int value) {
@@ -159,6 +179,14 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         } else if (preference == mMenuPressAction) {
             handleActionListChange(mMenuPressAction, newValue,
                     Settings.System.KEY_MENU_ACTION);
+            return true;
+        } else if (preference == mCameraPressAction) {
+            handleActionListChange(mCameraPressAction, newValue,
+                    Settings.System.KEY_CAMERA_ACTION);
+            return true;
+        } else if (preference == mCameraLongPressAction) {
+            handleActionListChange(mCameraLongPressAction, newValue,
+                    Settings.System.KEY_CAMERA_LONG_PRESS_ACTION);
             return true;
         }
         return false;
