@@ -23,5 +23,10 @@
             android:title="@string/button_title"
             android:fragment="com.glaze.settings.fragments.ButtonSettings" />
 
-</PreferenceScreen>
+        <!-- Themes -->
+        <PreferenceScreen
+            android:key="themessettings"
+            android:title="@string/theme_title"
+            android:fragment="com.glaze.settings.fragments.ThemeSettings" />
 
+</PreferenceScreen>

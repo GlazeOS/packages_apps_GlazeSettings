@@ -17,6 +17,7 @@
 
     <!-- Categories -->
     <string name="button_title">Buttons</string>
+    <string name="theme_title">Themes</string>
 
     <!-- Hardware keys -->
     <string name="hardware_keys_home_key_title">Home button</string>
