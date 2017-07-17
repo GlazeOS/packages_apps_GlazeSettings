@@ -16,31 +16,28 @@
 
 package com.glaze.settings;
 
-import com.android.settings.SettingsPreferenceFragment;
-import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceScreen;
 
 import com.android.settings.R;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto.MetricsEvent;
 
-public class GlazeSettings extends SettingsPreferenceFragment {
+import com.android.settings.SettingsPreferenceFragment;
+
+public class ControlSettings extends SettingsPreferenceFragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setComponent(new ComponentName("com.glazeos.glazesettings","com.glazeos.glazesettings.activity.MainActivity"));
-        startActivity(intent);
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        addPreferencesFromResource(R.xml.settings_main);
+        PreferenceScreen prefSet = getPreferenceScreen();
     }
 
     @Override
     protected int getMetricsCategory() {
         return MetricsEvent.GLAZE_SETTINGS;
     }
-
-
 }
